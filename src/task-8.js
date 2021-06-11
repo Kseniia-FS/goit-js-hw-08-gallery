@@ -45,6 +45,7 @@ function onImgClick(e) {
 function openModal() {
   refs.lightbox.classList.add("is-open");
   refs.lightbox.addEventListener("click", closeModalByBtnAndOverlay);
+  window.addEventListener("keydown", closeModalUseEsc);
 }
 function closeModal() {
   refs.lightbox.classList.remove("is-open");
