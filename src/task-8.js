@@ -10,7 +10,7 @@ const refs = {
 
 refs.galleryWrap.insertAdjacentHTML("beforeend", refs.galleryItems);
 refs.galleryWrap.addEventListener("click", onImgClick);
-refs.lightbox.addEventListener("click", closeModal);
+
 window.addEventListener("keydown", closeModalUseEsc);
 
 function createGallery(gallery) {
@@ -44,25 +44,30 @@ function onImgClick(e) {
 
 function openModal() {
   refs.lightbox.classList.add("is-open");
+  refs.lightbox.addEventListener("click", closeModalByBtnAndOverlay);
+}
+function closeModal() {
+  refs.lightbox.classList.remove("is-open");
 }
 
-function closeModal(e) {
+function closeModalByBtnAndOverlay(e) {
   if (e.target.nodeName === "BUTTON" || e.target.nodeName === "DIV") {
-    refs.lightbox.classList.remove("is-open");
-    refs.lightboxImg.src = "";
-    refs.lightboxImg.alt = "";
+    closeModal();
+    changeSrcForLightboxImg("", "");
   }
 }
 function closeModalUseEsc(e) {
   if (e.code === "Escape") {
-    refs.lightbox.classList.remove("is-open");
-    refs.lightboxImg.src = "";
-    refs.lightboxImg.alt = "";
+    closeModal();
+    changeSrcForLightboxImg("", "");
   }
 }
 function assignCurrentSrcForLightboxImg(e) {
   const currentImgLink = e.target.dataset.source;
   const currentImgAlt = e.target.alt;
-  refs.lightboxImg.src = currentImgLink;
-  refs.lightboxImg.alt = currentImgAlt;
+  changeSrcForLightboxImg(currentImgLink, currentImgAlt);
+}
+function changeSrcForLightboxImg(src, alt) {
+  refs.lightboxImg.src = src;
+  refs.lightboxImg.alt = alt;
 }
